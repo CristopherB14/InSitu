@@ -1,0 +1,116 @@
+/* src/styles/index.css */
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Times New Roman", serif;
+  background-color: #f5f5f5;
+  color: #111;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #111;
+  margin-left: 1rem;
+}
+
+.navbar a:hover {
+  color: #555;
+}
+
+/* Botones */
+.button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background-color: #111;
+  color: #fff;
+  transition: background-color 0.2s;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+/* Tarjetas de propiedad */
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+  padding: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.card h3 {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.card p {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* Detalle propiedad */
+.property-detail {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+}
+
+.property-detail img {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.property-detail h2 {
+  margin-bottom: 1rem;
+}
+
+.property-detail p {
+  margin-bottom: 0.5rem;
+}

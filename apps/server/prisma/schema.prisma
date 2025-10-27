@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Inmobiliaria {
+  id         String     @id @default(uuid())
+  name       String
+  address    String?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  properties Property[]
+  users      User[]
+}
+
+model User {
+  id             String        @id @default(uuid())
+  email          String        @unique
+  name           String
+  createdAt      DateTime      @default(now())
+  inmobiliariaId String?
+  password       String
+  role           Role          @default(USER)
+  updatedAt      DateTime      @updatedAt
+  favorites      Favorite[]
+  properties     Property[]    @relation("AgentProperties")
+  salesAsAgent   Sale[]        @relation("AgentSales")
+  inmobiliaria   Inmobiliaria? @relation(fields: [inmobiliariaId], references: [id])
+}
+
+model Property {
+  id             String            @id @default(uuid())
+  title          String
+  description    String?
+  price          Decimal           @db.Decimal(20, 2)
+  type           PropertyType
+  operation      OperationType
+  address        String
+  city           String?
+  country        String?
+  m2_total       Int?
+  m2_covered     Int?
+  bedrooms       Int?
+  bathrooms      Int?
+  amenities      String?
+  latitude       Float?
+  longitude      Float?
+  status         PublicationStatus @default(DRAFT)
+  publishedAt    DateTime?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  inmobiliariaId String
+  agentId        String
+  favorites      Favorite[]
+  agent          User              @relation("AgentProperties", fields: [agentId], references: [id])
+  inmobiliaria   Inmobiliaria      @relation(fields: [inmobiliariaId], references: [id])
+  photos         PropertyPhoto[]
+  sale           Sale?
+}
+
+model PropertyPhoto {
+  id         String   @id @default(uuid())
+  propertyId String
+  path       String
+  sort       Int      @default(0)
+  createdAt  DateTime @default(now())
+  property   Property @relation(fields: [propertyId], references: [id])
+}
+
+model Favorite {
+  id         String   @id @default(uuid())
+  userId     String
+  createdAt  DateTime @default(now())
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, propertyId])
+}
+
+model Client {
+  id        String   @id @default(uuid())
+  name      String
+  email     String?  @unique
+  phone     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  sales     Sale[]
+}
+
+model Sale {
+  id         String   @id @default(uuid())
+  propertyId String   @unique
+  agentId    String
+  clientId   String
+  price      Decimal  @db.Decimal(20, 2)
+  date       DateTime @default(now())
+  notes      String?
+  createdAt  DateTime @default(now())
+  agent      User     @relation("AgentSales", fields: [agentId], references: [id])
+  client     Client   @relation(fields: [clientId], references: [id])
+  property   Property @relation(fields: [propertyId], references: [id])
+}
+
+enum Role {
+  ADMIN
+  AGENT
+  USER
+}
+
+enum PropertyType {
+  DEPARTMENT
+  HOUSE
+  LOCAL
+  LOT
+  OTHER
+}
+
+enum OperationType {
+  SALE
+  RENT
+}
+
+enum PublicationStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}

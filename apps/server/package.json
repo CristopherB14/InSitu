@@ -1,0 +1,28 @@
+{
+  "name": "@inmob/server",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "scripts": {
+    "generate": "prisma generate",
+    "migrate": "prisma migrate dev --name init",
+    "dev": "ts-node-dev --respawn src/index.ts",
+    "seed": "ts-node prisma/seed.js",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.18.0",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.4",
+    "@types/jsonwebtoken": "^9.0.10",
+    "prisma": "^6.18.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  }
+}
