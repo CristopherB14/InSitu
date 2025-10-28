@@ -57,6 +57,39 @@
   color: #000;
 }
 
+.filters {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filters input,
+.filters select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.favorite-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.favorite-btn.active {
+  background-color: #ff6b81;
+  color: white;
+}
+
+.favorite-btn:not(.active) {
+  background-color: #eee;
+  color: #333;
+}
+
 /* ----- Responsive extra pequeño ----- */
 @media (max-width: 480px) {
   .grid {
