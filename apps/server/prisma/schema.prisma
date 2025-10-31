@@ -119,7 +119,6 @@ enum PropertyType {
   LOT
   PH
   OFFICE
-  OTHER
 }
 
 enum OperationType {
