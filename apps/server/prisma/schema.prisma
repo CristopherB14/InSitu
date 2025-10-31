@@ -117,6 +117,7 @@ enum PropertyType {
   HOUSE
   LOCAL
   LOT
+  OTHER
   PH
   OFFICE
 }

@@ -6,7 +6,11 @@ import propertiesRouter from "./routes/propiedades";
 const app = express();
 
 // CORS y parseo de JSON
-app.use(cors());
+app.use(cors({
+  origin: "https://insitu-homepage.onrender.com", // o "*" para permitir todos
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+}));
 app.use(express.json()); // ⚠️ Esto es fundamental para req.body
 
 // Rutas
