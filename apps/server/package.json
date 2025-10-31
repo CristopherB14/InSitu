@@ -7,7 +7,7 @@
     "migrate": "prisma migrate dev --name init",
     "dev": "ts-node-dev --respawn src/index.ts",
     "seed": "ts-node prisma/seed.js",
-    "build": "tsc"
+    "build": "npx prisma generate && npm run build"
   },
   "dependencies": {
     "@prisma/client": "^6.18.0",
