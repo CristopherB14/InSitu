@@ -2,12 +2,16 @@ import express from "express";
 import cors from "cors";
 import favoritesRouter from "./routes/favoritos";
 import propertiesRouter from "./routes/propiedades";
+import authRoutes from "./routes/auth";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
 // CORS y parseo de JSON
 app.use(cors({
-  origin: "https://insitu-homepage.onrender.com", // o "*" para permitir todos
+  origin: "*", // o "*" para permitir todos
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
@@ -20,6 +24,7 @@ app.get("/", (req, res) => {
 
 app.use("/favorites", favoritesRouter);
 app.use("/properties", propertiesRouter);
+app.use("/auth", authRoutes);
 
 const PORT = process.env.PORT || 5127;
 app.listen(PORT, () => console.log("Server running on port", PORT));

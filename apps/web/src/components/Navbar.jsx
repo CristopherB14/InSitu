@@ -13,6 +13,7 @@ export default function Navbar() {
           <Link to="/propiedades">Propiedades</Link>
           <Link to="/favoritos">Favoritos</Link>
           <Link to="/login">Login</Link>
+          <Link to="/Register">Registro</Link>
         </div>
       </div>
     </nav>

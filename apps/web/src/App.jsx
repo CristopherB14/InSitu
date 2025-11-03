@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Propiedades from "./pages/Propiedades";
-import Registro from "./pages/Registro";
+import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
 import Favoritos from "./pages/Favoritos";
 
@@ -12,9 +12,9 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/propiedades" element={<Propiedades />} />
-        <Route path="/registro" element={<Registro />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/favoritos" element={<Favoritos />} />
       </Routes>
     </>
