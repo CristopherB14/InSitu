@@ -32,7 +32,7 @@ export default function Home() {
       {/* Hero */}
       <section className="hero">
         <div className="hero-content">
-          <h1>Bienvenido a Inmobiliaria Demo</h1>
+          <h1>Bienvenido a In Situ</h1>
           <p>
             Tu espacio ideal te está esperando. Casas, departamentos y oficinas
             en las mejores ubicaciones de la ciudad.
