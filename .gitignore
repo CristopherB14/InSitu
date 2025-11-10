@@ -23,3 +23,5 @@ node_modules
 
 #Environment Variables
 .env
+
+seed.js 

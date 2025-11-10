@@ -1,98 +1,164 @@
-/* ----- Estilo para la página de Propiedades ----- */
+/* ----- Contenedor general ----- */
 .container {
   width: 90%;
   max-width: 1200px;
   margin: 40px auto;
-}
-
-.container h2 {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 30px;
+  font-family: 'Inter', sans-serif;
   color: #222;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
+/* Título */
+.container h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #111;
+  text-align: center;
+  letter-spacing: -0.5px;
 }
 
-/* ----- Estilo para cada Tarjeta ----- */
+/* ----- Filtros ----- */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 35px;
+  flex-wrap: wrap;
+}
+
+.filters input,
+.filters select {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.filters input:focus,
+.filters select:focus {
+  outline: none;
+  border-color: #007bff;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+/* ----- Grilla de propiedades ----- */
+.grid-propiedades {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 26px;
+}
+
+/* ----- Tarjeta individual ----- */
 .card {
   background: #fff;
-  border-radius: 14px;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   transition: transform .25s ease, box-shadow .25s ease;
   display: flex;
   flex-direction: column;
-  padding-bottom: 12px;
+  position: relative;
 }
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
 }
 
+/* Imagen */
 .card img {
   width: 100%;
-  height: 185px;
+  height: 200px;
   object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card:hover img {
+  transform: scale(1.03);
+}
+
+/* Contenido */
+.card-content {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .card h3 {
-  font-size: 1.25rem;
-  margin: 14px 12px 8px;
+  font-size: 1.3rem;
   color: #111;
+  margin-bottom: 4px;
 }
 
 .card p {
-  font-size: .95rem;
-  margin: 4px 12px;
-  color: #444;
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0;
 }
 
 .card p strong {
   color: #000;
 }
 
-.filters {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
+/* Precio destacado */
+.card .precio {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #007bff;
+  margin-top: 6px;
 }
 
-.filters input,
-.filters select {
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
+/* ----- Botón de favorito ----- */
 .favorite-btn {
-  padding: 6px 12px;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.9);
   border: none;
-  border-radius: 6px;
+  border-radius: 50%;
   cursor: pointer;
-  margin-top: 10px;
-  font-weight: bold;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.favorite-btn:hover {
+  background: #ff6b81;
+  color: white;
+  transform: scale(1.1);
 }
 
 .favorite-btn.active {
-  background-color: #ff6b81;
+  background: #ff4757;
   color: white;
 }
 
-.favorite-btn:not(.active) {
-  background-color: #eee;
-  color: #333;
+/* ----- Responsive ----- */
+@media (max-width: 768px) {
+  .container h2 {
+    font-size: 1.8rem;
+  }
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .grid-propiedades {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
 }
 
-/* ----- Responsive extra pequeño ----- */
 @media (max-width: 480px) {
-  .grid {
+  .container {
+    width: 95%;
+  }
+  .grid-propiedades {
     grid-template-columns: 1fr;
   }
 }

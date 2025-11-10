@@ -27,6 +27,13 @@ export default function Navbar() {
           <Link to="/propiedades">Propiedades</Link>
           <Link to="/favoritos">Favoritos</Link>
 
+          {/* ✅ Mostrar botón Admin solo si user existe y su rol es ADMIN */}
+          {user?.role === "ADMIN" && (
+            <Link to="/admin" className="admin-link">
+              Panel Admin
+            </Link>
+          )}
+
           {!user ? (
             <>
               <Link to="/login">Login</Link>

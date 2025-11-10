@@ -1,0 +1,78 @@
+/* ======= Panel general de administración ======= */
+
+.admin-dashboard {
+  display: flex;
+  min-height: calc(100vh - 60px); /* resta el alto del navbar */
+  background-color: #f5f5f5;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* ======= Barra lateral ======= */
+.admin-sidebar {
+  width: 240px;
+  background-color: #2b2d42;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 20px 10px;
+}
+
+.admin-sidebar h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #edf2f4;
+  letter-spacing: 0.5px;
+}
+
+.admin-sidebar button {
+  background: none;
+  border: none;
+  color: #edf2f4;
+  padding: 12px 10px;
+  text-align: left;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  border-radius: 4px;
+}
+
+.admin-sidebar button:hover {
+  background-color: #3a3d59;
+}
+
+.admin-sidebar button:active {
+  background-color: #50536b;
+}
+
+/* ======= Contenido principal ======= */
+.admin-content {
+  flex: 1;
+  padding: 30px;
+  background-color: #ffffff;
+  border-left: 1px solid #e0e0e0;
+}
+
+.admin-content h2 {
+  margin-bottom: 15px;
+  color: #2b2d42;
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard {
+    flex-direction: column;
+  }
+
+  .admin-sidebar {
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .admin-sidebar button {
+    flex: 1;
+    text-align: center;
+  }
+}

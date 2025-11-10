@@ -29,19 +29,23 @@ export default function TarjetaPropiedad({ propiedad, isFavorite, onToggleFavori
 
   return (
     <div className="card">
-      <img src={image} alt={propiedad.title} />
-      <h3>{propiedad.title}</h3>
-      <p>{propiedad.description}</p>
-      <p><strong>Precio:</strong> ${propiedad.price}</p>
-      <p><strong>Ubicación:</strong> {propiedad.city}, {propiedad.country}</p>
-      {onToggleFavorite && (
-        <button
-          className={`btn-favorite ${isFavorite ? "favorito" : ""}`}
-          onClick={onToggleFavorite}
-        >
-          {isFavorite ? "★ Favorito" : "☆ Marcar favorito"}
-        </button>
-      )}
-    </div>
+  <img src={propiedad.image || "default.jpg"} alt={propiedad.title} />
+  
+  <button
+    className={`favorite-btn ${isFavorite ? "active" : ""}`}
+    onClick={onToggleFavorite}
+  >
+    ♥
+  </button>
+
+  <div className="card-content">
+    <h3>{propiedad.title}</h3>
+    <p><strong>Ubicación:</strong> {propiedad.city}</p>
+    <p><strong>Tipo:</strong> {propiedad.type}</p>
+    <p className="precio">
+      {propiedad.operation === "SALE" ? "Venta" : "Alquiler"} – ${propiedad.price}
+    </p>
+  </div>
+</div>
   );
 }

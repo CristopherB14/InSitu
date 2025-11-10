@@ -1,22 +1,21 @@
 import { createContext, useState } from "react";
-import { login } from "../services/auth";
+import { login, saveUserSession, getUserSession, clearUserSession } from "../services/auth";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null
-  );
+  const [user, setUser] = useState(getUserSession());
 
   const handleLogin = async (email, password) => {
     const res = await login(email, password);
-    setUser(res.data.user);
-    localStorage.setItem("user", JSON.stringify(res.data.user));
+    const loggedUser = res.data; // tu backend devuelve { id, name, email, role }
+    setUser(loggedUser);
+    saveUserSession(loggedUser);
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("user");
+    clearUserSession();
   };
 
   return (

@@ -3,6 +3,8 @@ import cors from "cors";
 import favoritesRouter from "./routes/favoritos";
 import propertiesRouter from "./routes/propiedades";
 import authRoutes from "./routes/auth";
+import adminRoutes from "./routes/admin";
+import usersRouter from "./routes/users";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -25,6 +27,8 @@ app.get("/", (req, res) => {
 app.use("/favorites", favoritesRouter);
 app.use("/properties", propertiesRouter);
 app.use("/auth", authRoutes);
+app.use("/admin", adminRoutes);
 
+// Iniciar servidor
 const PORT = process.env.PORT || 5127;
 app.listen(PORT, () => console.log("Server running on port", PORT));

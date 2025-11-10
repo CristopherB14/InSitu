@@ -1,0 +1,103 @@
+/* ======= Sección de propiedades ======= */
+
+.admin-section {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.admin-section h2 {
+  color: #2b2d42;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #edf2f4;
+  padding-bottom: 10px;
+}
+
+/* ======= Formulario de creación ======= */
+.prop-form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.prop-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  flex: 1;
+  min-width: 150px;
+}
+
+.prop-form button {
+  background-color: #2b2d42;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 18px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.prop-form button:hover {
+  background-color: #3a3d59;
+}
+
+/* ======= Tabla de propiedades ======= */
+.prop-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.prop-table th,
+.prop-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.prop-table th {
+  background-color: #2b2d42;
+  color: #edf2f4;
+}
+
+.prop-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.prop-table button {
+  background-color: #ef233c;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s ease;
+}
+
+.prop-table button:hover {
+  background-color: #d90429;
+}
+
+/* ======= Responsividad ======= */
+@media (max-width: 768px) {
+  .prop-form {
+    flex-direction: column;
+  }
+
+  .prop-form input,
+  .prop-form button {
+    width: 100%;
+  }
+
+  .prop-table th,
+  .prop-table td {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+}
