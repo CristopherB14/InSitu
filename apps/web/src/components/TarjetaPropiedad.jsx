@@ -29,7 +29,7 @@ export default function TarjetaPropiedad({ propiedad, isFavorite, onToggleFavori
 
   return (
     <div className="card">
-  <img src={propiedad.image || "default.jpg"} alt={propiedad.title} />
+  <img src={propiedad.image || "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg"} alt={propiedad.title} />
   
   <button
     className={`favorite-btn ${isFavorite ? "active" : ""}`}

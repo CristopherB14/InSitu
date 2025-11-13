@@ -1,87 +1,125 @@
-/* ======= Sección de propiedades ======= */
-
+/* ======= Sección principal de Propiedades ======= */
 .admin-section {
   background-color: #ffffff;
-  border-radius: 8px;
-  padding: 25px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  padding: 28px 32px;
+  box-shadow: 0 2px 10px rgba(43, 45, 66, 0.08);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.admin-section:hover {
+  box-shadow: 0 6px 20px rgba(43, 45, 66, 0.12);
+  transform: translateY(-2px);
 }
 
 .admin-section h2 {
-  color: #2b2d42;
-  font-size: 1.5rem;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #edf2f4;
+  color: #1e293b;
+  font-size: 1.6rem;
+  margin-bottom: 22px;
+  border-bottom: 2px solid #e2e8f0;
   padding-bottom: 10px;
+  font-weight: 600;
 }
 
-/* ======= Formulario de creación ======= */
+/* ======= Formulario ======= */
 .prop-form {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  margin-bottom: 28px;
 }
 
 .prop-form input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 0.95rem;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.96rem;
   flex: 1;
-  min-width: 150px;
+  min-width: 160px;
+  background-color: #f8fafc;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.prop-form input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  outline: none;
 }
 
 .prop-form button {
-  background-color: #2b2d42;
+  background: linear-gradient(90deg, #2563eb, #1d4ed8);
   color: white;
   border: none;
-  border-radius: 6px;
-  padding: 10px 18px;
+  border-radius: 8px;
+  padding: 12px 20px;
   cursor: pointer;
-  transition: background 0.2s;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
 }
 
 .prop-form button:hover {
-  background-color: #3a3d59;
+  background: linear-gradient(90deg, #1d4ed8, #1e40af);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
 }
 
-/* ======= Tabla de propiedades ======= */
+.prop-form button:active {
+  transform: scale(0.98);
+}
+
+/* ======= Tabla ======= */
 .prop-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .prop-table th,
 .prop-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
+  border: 1px solid #e2e8f0;
+  padding: 12px 14px;
   text-align: left;
+  font-size: 0.95rem;
 }
 
 .prop-table th {
   background-color: #2b2d42;
   color: #edf2f4;
+  font-weight: 600;
+  letter-spacing: 0.4px;
 }
 
 .prop-table tr:nth-child(even) {
-  background-color: #f9f9f9;
+  background-color: #f8fafc;
+}
+
+.prop-table tr:hover {
+  background-color: #f1f5f9;
+  transition: background-color 0.2s ease;
 }
 
 .prop-table button {
-  background-color: #ef233c;
+  background-color: #ef4444;
   color: white;
   border: none;
-  padding: 6px 10px;
-  border-radius: 4px;
+  padding: 7px 12px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 0.85rem;
-  transition: background 0.2s ease;
+  font-size: 0.86rem;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .prop-table button:hover {
-  background-color: #d90429;
+  background-color: #dc2626;
+  transform: translateY(-1px);
+}
+
+.prop-table button:active {
+  transform: scale(0.96);
 }
 
 /* ======= Responsividad ======= */
@@ -99,5 +137,9 @@
   .prop-table td {
     font-size: 0.9rem;
     padding: 8px;
+  }
+
+  .admin-section {
+    padding: 20px;
   }
 }

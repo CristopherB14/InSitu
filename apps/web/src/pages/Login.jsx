@@ -1,6 +1,7 @@
 import { useState } from "react";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
+import auth from "../styles/auth.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -23,6 +24,7 @@ export default function Login() {
   };
 
   return (
+  <div className="auth-wrapper">
     <div className="auth-container">
       <h2>Iniciar Sesión</h2>
       <form onSubmit={handleSubmit}>
@@ -31,6 +33,10 @@ export default function Login() {
         {error && <p className="error">{error}</p>}
         <button type="submit">Ingresar</button>
       </form>
+      <p>
+        ¿No tenés cuenta? <a href="/register">Registrate aquí</a>
+      </p>
     </div>
+  </div>
   );
 }

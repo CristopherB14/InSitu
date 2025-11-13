@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getUserSession, clearUserSession } from "../services/auth";
 import "../styles/navbar.css";
 
 export default function Navbar() {
   const [user, setUser] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
     setUser(getUserSession());
@@ -13,23 +14,39 @@ export default function Navbar() {
   const handleLogout = () => {
     clearUserSession();
     setUser(null);
-    window.location.reload(); // refresca la UI
+    window.location.reload();
   };
 
   return (
     <nav className="navbar">
       <div className="nav-container">
+        {/* Logo */}
         <Link to="/" className="logo">
-          In Situ
+          In<span>Situ</span>
         </Link>
 
+        {/* Links */}
         <div className="nav-links">
-          <Link to="/propiedades">Propiedades</Link>
-          <Link to="/favoritos">Favoritos</Link>
+          <Link
+            to="/propiedades"
+            className={location.pathname === "/propiedades" ? "active" : ""}
+          >
+            Propiedades
+          </Link>
+          <Link
+            to="/favoritos"
+            className={location.pathname === "/favoritos" ? "active" : ""}
+          >
+            Favoritos
+          </Link>
 
-          {/* ✅ Mostrar botón Admin solo si user existe y su rol es ADMIN */}
           {user?.role === "ADMIN" && (
-            <Link to="/admin" className="admin-link">
+            <Link
+              to="/admin"
+              className={`admin-link ${
+                location.pathname.startsWith("/admin") ? "active" : ""
+              }`}
+            >
               Panel Admin
             </Link>
           )}
@@ -37,7 +54,9 @@ export default function Navbar() {
           {!user ? (
             <>
               <Link to="/login">Login</Link>
-              <Link to="/register">Registro</Link>
+              <Link to="/register" className="highlight-link">
+                Registro
+              </Link>
             </>
           ) : (
             <button onClick={handleLogout} className="logout-btn">
@@ -46,7 +65,7 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Avatar y estado */}
+        {/* Usuario */}
         <div className="nav-user">
           <div className="avatar">
             <img
@@ -56,7 +75,7 @@ export default function Navbar() {
             />
           </div>
           <span className="user-email">
-            {user ? user.email : "No has iniciado sesión"}
+            {user ? user.name : "Invitado"}
           </span>
         </div>
       </div>

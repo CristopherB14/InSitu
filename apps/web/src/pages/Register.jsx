@@ -1,7 +1,7 @@
 import { useState } from "react";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
-import auth from "../styles/auth.css";
+import "../styles/auth.css";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -24,15 +24,37 @@ export default function Register() {
   };
 
   return (
-    <div className="auth-container">
-      <h2>Registrar</h2>
-      <form onSubmit={handleSubmit}>
-        <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Nombre" required />
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Correo" required />
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Contraseña" required />
-        {error && <p className="error">{error}</p>}
-        <button type="submit">Registrarse</button>
-      </form>
+    <div className="auth-wrapper">
+      <div className="auth-container">
+        <h2>Registrarse</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Nombre"
+            required
+          />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Correo"
+            required
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Contraseña"
+            required
+          />
+          {error && <p className="error">{error}</p>}
+          <button type="submit">Registrarse</button>
+        </form>
+        <p>
+          ¿Ya tenés cuenta? <a href="/login">Iniciá sesión</a>
+        </p>
+      </div>
     </div>
   );
 }

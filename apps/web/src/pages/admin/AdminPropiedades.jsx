@@ -1,10 +1,12 @@
-// src/pages/admin/AdminPropiedades.jsx
 import React, { useEffect, useState } from "react";
 import API from "../../services/api";
 import "../../styles/adminPropiedades.css";
 
 export default function AdminPropiedades() {
   const [propiedades, setPropiedades] = useState([]);
+  const [inmobiliarias, setInmobiliarias] = useState([]);
+  const [agentes, setAgentes] = useState([]);
+
   const [nuevaPropiedad, setNuevaPropiedad] = useState({
     title: "",
     description: "",
@@ -12,19 +14,26 @@ export default function AdminPropiedades() {
     city: "",
     country: "",
     price: "",
-    type: "",
-    operation: "",
+    type: "HOUSE",
+    operation: "SALE",
+    status: "DRAFT",
     m2_total: "",
     m2_covered: "",
     bedrooms: "",
     bathrooms: "",
     amenities: "",
-    inmobiliariaId: "",
-    agentId: "",
+    inmobiliariaName: "",
+    agentName: "",
   });
+
+  const propertyTypes = ["DEPARTMENT", "HOUSE", "LOCAL", "LOT", "OTHER", "PH", "OFFICE"];
+  const operationTypes = ["SALE", "RENT"];
+  const publicationStatuses = ["DRAFT", "PUBLISHED", "ARCHIVED"];
 
   useEffect(() => {
     fetchPropiedades();
+    fetchInmobiliarias();
+    fetchAgentes();
   }, []);
 
   const fetchPropiedades = async () => {
@@ -32,44 +41,82 @@ export default function AdminPropiedades() {
       const res = await API.get("/properties");
       setPropiedades(res.data);
     } catch (err) {
-      console.error("Error al cargar propiedades:", err);
+      console.error("❌ Error al cargar propiedades:", err);
     }
   };
 
-  const handleCreate = async () => {
+  const fetchInmobiliarias = async () => {
     try {
-      await API.post("/properties", {
-        ...nuevaPropiedad,
-        price: parseFloat(nuevaPropiedad.price),
-        m2_total: nuevaPropiedad.m2_total ? parseFloat(nuevaPropiedad.m2_total) : null,
-        m2_covered: nuevaPropiedad.m2_covered ? parseFloat(nuevaPropiedad.m2_covered) : null,
-        bedrooms: nuevaPropiedad.bedrooms ? parseInt(nuevaPropiedad.bedrooms) : null,
-        bathrooms: nuevaPropiedad.bathrooms ? parseInt(nuevaPropiedad.bathrooms) : null,
-      });
+      const res = await API.get("/inmobiliarias");
+      setInmobiliarias(res.data);
+    } catch (err) {
+      console.error("❌ Error al cargar inmobiliarias:", err);
+    }
+  };
 
+  const fetchAgentes = async () => {
+    try {
+      const res = await API.get("/users");
+      setAgentes(res.data);
+    } catch (err) {
+      console.error("❌ Error al cargar agentes:", err);
+    }
+  };
+  
+  const handleCreate = async (e) => {
+  e.preventDefault();
+
+  const normalize = (s) => s?.trim().toLowerCase() ?? "";
+
+  const inmobiliaria = inmobiliarias.find(
+    (i) => normalize(i?.name) === normalize(nuevaPropiedad.inmobiliariaName)
+  );
+  const agente = agentes.find(
+    (a) => normalize(a?.name) === normalize(nuevaPropiedad.agentName)
+  );
+
+  if (!nuevaPropiedad.title || !nuevaPropiedad.address || !inmobiliaria || !agente) {
+    alert("⚠️ Por favor completa título, dirección, inmobiliaria y agente válidos.");
+    return;
+  }
+
+  try {
+    const res = await API.post("/properties", {
+      ...nuevaPropiedad,
+      inmobiliariaId: inmobiliaria.id,
+      agentId: agente.id,
+    });
+
+    if (res.status === 201 || res.status === 200) {
+      alert("✅ Propiedad creada correctamente");
       setNuevaPropiedad({
         title: "",
-        description: "",
         address: "",
-        city: "",
-        country: "",
+        inmobiliariaName: "",
+        agentName: "",
+        description: "",
         price: "",
-        type: "",
-        operation: "",
+        type: "HOUSE",
+        operation: "SALE",
+        status: "DRAFT",
         m2_total: "",
         m2_covered: "",
         bedrooms: "",
         bathrooms: "",
         amenities: "",
-        inmobiliariaId: "",
-        agentId: "",
       });
-
-      fetchPropiedades();
-    } catch (err) {
-      console.error("❌ Error al crear propiedad:", err);
+      fetchPropiedades(); // Refresca la lista después de crear
+    } else {
+      alert("❌ Ocurrió un error al crear la propiedad");
     }
-  };
+  } catch (error) {
+    console.error("Error al crear la propiedad:", error);
+    alert("❌ Error al crear la propiedad. Revisa la consola para más detalles.");
+  }
+};
+
+
+
 
   const handleDelete = async (id) => {
     try {
@@ -87,7 +134,7 @@ export default function AdminPropiedades() {
       <div className="prop-form">
         <input
           type="text"
-          placeholder="Título"
+          placeholder="Título *"
           value={nuevaPropiedad.title}
           onChange={(e) => setNuevaPropiedad({ ...nuevaPropiedad, title: e.target.value })}
         />
@@ -99,7 +146,7 @@ export default function AdminPropiedades() {
         />
         <input
           type="text"
-          placeholder="Dirección"
+          placeholder="Dirección *"
           value={nuevaPropiedad.address}
           onChange={(e) => setNuevaPropiedad({ ...nuevaPropiedad, address: e.target.value })}
         />
@@ -117,22 +164,44 @@ export default function AdminPropiedades() {
         />
         <input
           type="number"
-          placeholder="Precio"
+          placeholder="Precio (USD)"
           value={nuevaPropiedad.price}
           onChange={(e) => setNuevaPropiedad({ ...nuevaPropiedad, price: e.target.value })}
         />
-        <input
-          type="text"
-          placeholder="Tipo (ej: HOUSE, DEPARTMENT)"
+
+        <select
           value={nuevaPropiedad.type}
           onChange={(e) => setNuevaPropiedad({ ...nuevaPropiedad, type: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Operación (ej: SALE, RENT)"
+        >
+          {propertyTypes.map((t) => (
+            <option key={t} value={t}>
+              {t}
+            </option>
+          ))}
+        </select>
+
+        <select
           value={nuevaPropiedad.operation}
           onChange={(e) => setNuevaPropiedad({ ...nuevaPropiedad, operation: e.target.value })}
-        />
+        >
+          {operationTypes.map((o) => (
+            <option key={o} value={o}>
+              {o}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={nuevaPropiedad.status}
+          onChange={(e) => setNuevaPropiedad({ ...nuevaPropiedad, status: e.target.value })}
+        >
+          {publicationStatuses.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+
         <input
           type="number"
           placeholder="m² Totales"
@@ -163,18 +232,36 @@ export default function AdminPropiedades() {
           value={nuevaPropiedad.amenities}
           onChange={(e) => setNuevaPropiedad({ ...nuevaPropiedad, amenities: e.target.value })}
         />
-        <input
-          type="text"
-          placeholder="ID Inmobiliaria"
-          value={nuevaPropiedad.inmobiliariaId}
-          onChange={(e) => setNuevaPropiedad({ ...nuevaPropiedad, inmobiliariaId: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="ID Agente"
-          value={nuevaPropiedad.agentId}
-          onChange={(e) => setNuevaPropiedad({ ...nuevaPropiedad, agentId: e.target.value })}
-        />
+        {/* Select para Inmobiliaria */}
+  <select
+    value={nuevaPropiedad.inmobiliariaName}
+    onChange={(e) =>
+      setNuevaPropiedad({ ...nuevaPropiedad, inmobiliariaName: e.target.value })
+    }
+  >
+    <option value="">Selecciona Inmobiliaria *</option>
+    {inmobiliarias.map((i) => (
+      <option key={i.id} value={i.name}>
+        {i.name}
+      </option>
+    ))}
+  </select>
+
+  {/* Select para Agente */}
+  <select
+    value={nuevaPropiedad.agentName}
+    onChange={(e) => setNuevaPropiedad({ ...nuevaPropiedad, agentName: e.target.value })}
+  >
+    <option value="">Selecciona Agente *</option>
+    {agentes
+      .filter((a) => a.role === "AGENT")
+      .map((a) => (
+        <option key={a.id} value={a.name}>
+          {a.name} ({a.email})
+        </option>
+      ))}
+  </select>
+
 
         <button onClick={handleCreate}>Agregar Propiedad</button>
       </div>
@@ -184,7 +271,8 @@ export default function AdminPropiedades() {
           <tr>
             <th>ID</th>
             <th>Título</th>
-            <th>Dirección</th>
+            <th>Tipo</th>
+            <th>Operación</th>
             <th>Precio</th>
             <th>Acciones</th>
           </tr>
@@ -194,7 +282,8 @@ export default function AdminPropiedades() {
             <tr key={p.id}>
               <td>{p.id}</td>
               <td>{p.title}</td>
-              <td>{p.address}</td>
+              <td>{p.type}</td>
+              <td>{p.operation}</td>
               <td>${p.price}</td>
               <td>
                 <button onClick={() => handleDelete(p.id)}>Eliminar</button>

@@ -9,7 +9,7 @@
 /* ----------- Hero ----------- */
 .hero {
   background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.55)),
-              url("/assets/hero-bg.jpg") center/cover no-repeat;
+              url("https://www.muypymes.com/wp-content/uploads/2019/09/Inmobiliaria.jpg") center/cover no-repeat;
   color: #fff;
   padding: 7rem 2rem;
   text-align: center;
