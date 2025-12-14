@@ -5,11 +5,13 @@ import "../styles/navbar.css";
 
 export default function Navbar() {
   const [user, setUser] = useState(null);
+  const [open, setOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     setUser(getUserSession());
-  }, []);
+    setOpen(false); // cierra menú al navegar
+  }, [location.pathname]);
 
   const handleLogout = () => {
     clearUserSession();
@@ -20,33 +22,35 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="nav-container">
+
+        {/* Hamburguesa */}
+        <button
+          className={`menu-toggle ${open ? "open" : ""}`}
+          onClick={() => setOpen(!open)}
+          aria-label="Abrir menú"
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
         {/* Logo */}
         <Link to="/" className="logo">
           In<span>Situ</span>
         </Link>
 
         {/* Links */}
-        <div className="nav-links">
-          <Link
-            to="/propiedades"
-            className={location.pathname === "/propiedades" ? "active" : ""}
-          >
+        <div className={`nav-links ${open ? "show" : ""}`}>
+          <Link to="/propiedades" className={location.pathname === "/propiedades" ? "active" : ""}>
             Propiedades
           </Link>
-          <Link
-            to="/favoritos"
-            className={location.pathname === "/favoritos" ? "active" : ""}
-          >
+
+          <Link to="/favoritos" className={location.pathname === "/favoritos" ? "active" : ""}>
             Favoritos
           </Link>
 
           {user?.role === "ADMIN" && (
-            <Link
-              to="/admin"
-              className={`admin-link ${
-                location.pathname.startsWith("/admin") ? "active" : ""
-              }`}
-            >
+            <Link to="/admin" className={location.pathname.startsWith("/admin") ? "active" : ""}>
               Panel Admin
             </Link>
           )}
@@ -54,9 +58,7 @@ export default function Navbar() {
           {!user ? (
             <>
               <Link to="/login">Login</Link>
-              <Link to="/register" className="highlight-link">
-                Registro
-              </Link>
+              <Link to="/register" className="highlight-link">Registro</Link>
             </>
           ) : (
             <button onClick={handleLogout} className="logout-btn">
@@ -74,10 +76,8 @@ export default function Navbar() {
               className="avatar-img"
             />
           </div>
-          <span className="user-email">
-            {user ? user.name : "Invitado"}
-          </span>
         </div>
+
       </div>
     </nav>
   );
